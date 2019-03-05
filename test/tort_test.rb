@@ -11,7 +11,7 @@ def tort_sort_faster?(unsorted_array)
   tort_time = finish - start
   puts('tort sort time: ' + tort_time.to_s)
 
-  # normal sort
+  # normal unoptimized sort
   start = Time.now
   normal_unoptimized_sorted_array = unsorted_array.sort(&:<=>)
   finish = Time.now
