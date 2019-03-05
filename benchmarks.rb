@@ -29,7 +29,6 @@ def normal_unoptimized_sort_time(array)
   total_time
 end
 
-
 def normal_sort_time(array)
   start = Time.now
   array.sort

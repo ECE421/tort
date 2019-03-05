@@ -2,27 +2,28 @@ require 'parallel'
 
 # Multi-threaded / multi-processed sort for Ruby
 class Tort
-  def initialize(process_workers = Parallel.processor_count)
-    @process_workers = process_workers
-  end
-
-  def tort_sort(unsorted_array, &block)
-    sorted_sub_arrays = Parallel.map(chunk_array(unsorted_array), in_processes: @process_workers) do |sub_array|
+  def self.tort_thread_sort(unsorted_array, thread_workers = Parallel.processor_count, &block)
+    sorted_sub_arrays = Parallel.map(chunk_array(unsorted_array, thread_workers), in_threads: thread_workers) do |sub_array|
       sub_array.sort(&block)
     end
     sorted_sub_arrays.inject(&method(:merge))
   end
 
-  protected
+  def self.tort_process_sort(unsorted_array, process_workers = Parallel.processor_count, &block)
+    sorted_sub_arrays = Parallel.map(chunk_array(unsorted_array, process_workers), in_processes: process_workers) do |sub_array|
+      sub_array.sort(&block)
+    end
+    sorted_sub_arrays.inject(&method(:merge))
+  end
 
-  def chunk_array(array)
-    array.each_slice((array.size.to_f / @process_workers.to_f).ceil).to_a
+  def self.chunk_array(array, workers)
+    array.each_slice((array.size / workers.to_f).ceil)
   end
 
   # merge two sorted sub arrays
   #
   # Note: this method supports TCO
-  def merge(left_array, right_array)
+  def self.merge(left_array, right_array)
     merged_array = []
     offset_left = 0
     offset_right = 0
