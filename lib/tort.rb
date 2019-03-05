@@ -1,11 +1,13 @@
 require 'parallel'
 
+# Multi-threaded / multi-processed sort for Ruby
 class Tort
   def initialize(process_workers = Parallel.processor_count)
     @process_workers = process_workers
   end
 
   def tort_sort(unsorted_array)
+    # TODO: add ability to specify override sort block similar to ruby's normal sort
     sorted_sub_arrays = Parallel.map(chunk_array(unsorted_array), in_processes: @process_workers, &:sort)
     sorted_sub_arrays.inject(&method(:merge)).to_a
   end
