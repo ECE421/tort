@@ -19,4 +19,10 @@ class TortTest < Test::Unit::TestCase
     sorter = Tort.new
     assert_equal(unsorted_array.sort, sorter.tort_sort(unsorted_array))
   end
+
+  def test_tort_sort_rand
+    unsorted_array = Array.new(10000) { rand(1...10000) }
+    sorter = Tort.new
+    assert_equal(unsorted_array.sort, sorter.tort_sort(unsorted_array))
+  end
 end
