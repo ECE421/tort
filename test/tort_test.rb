@@ -54,7 +54,7 @@ class TortTest < Test::Unit::TestCase
     assert_false(tort_sort_faster?(unsorted_array))
   end
 
-  # this fails on travis as its multi core performance is poor
+  ## TODO: this fails on travis as its multi core performance is poor
   # def test_benchmark_tort_sort_large
   #   unsorted_array = Array.new(100_000_000) { rand(1...10_000_000) }
   #   assert_true(tort_sort_faster?(unsorted_array))
