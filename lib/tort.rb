@@ -20,9 +20,7 @@ class Tort
 
   def self.merge(left, right)
     result = []
-    until left.empty? || right.empty?
-      result << (left[0] <= right[0] ? left : right).shift
-    end
+    result << (left[0] <= right[0] ? left : right).shift until left.empty? || right.empty?
     result.concat(left).concat(right)
   end
 end
