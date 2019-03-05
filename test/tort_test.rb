@@ -25,4 +25,23 @@ class TortTest < Test::Unit::TestCase
     sorter = Tort.new
     assert_equal(unsorted_array.sort, sorter.tort_sort(unsorted_array))
   end
+
+  def benchmark_tort_sort_large
+    unsorted_array = Array.new(10_000_000) { rand(1...10_000_000) }
+
+    # multi-threaded sort
+    sorter = Tort.new
+    start = Time.now
+    sorter.tort_sort(unsorted_array, &:<=>)
+    finish = Time.now
+    tort_time = finish - start
+
+    # normal sort
+    start = Time.now
+    unsorted_array.sort(&:<=>)
+    finish = Time.now
+    normal_unoptimized_time = finish - start
+
+    assert_true(tort_time < normal_unoptimized_time)
+  end
 end
