@@ -40,7 +40,7 @@ end
 
 unsorted_array = Array.new(10_000_000) { rand(-100_000_000...100_000_000) }.to_a
 
-normal_sort_time(unsorted_array)
-normal_unoptimized_sort_time(unsorted_array)
 tort_thread_sort_time(unsorted_array)
 tort_process_sort_time(unsorted_array)
+normal_sort_time(unsorted_array)
+normal_unoptimized_sort_time(unsorted_array)
