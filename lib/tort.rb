@@ -1,6 +1,5 @@
 require 'parallel'
 
-# stub class for development
 class Tort
   def initialize(process_workers = Parallel.processor_count)
     @process_workers = process_workers
