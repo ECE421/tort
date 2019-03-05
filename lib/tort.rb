@@ -16,11 +16,8 @@ class Tort
     parallel_process_merging(sorted_sub_arrays, process_workers)
   end
 
-
   def self.parallel_process_merging(sorted_sub_arrays, process_workers)
     while sorted_sub_arrays.count > 1
-      puts(sorted_sub_arrays.to_s)  # debug
-      puts(sorted_sub_arrays.each_slice(2).to_a.to_s)
       sorted_sub_arrays = Parallel.map(sorted_sub_arrays.each_slice(2), in_processes: process_workers) do |sorted_sub_array1, sorted_sub_array2 = []|
         merge(sorted_sub_array1, sorted_sub_array2)
       end
