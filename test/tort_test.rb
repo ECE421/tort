@@ -53,7 +53,7 @@ class TortTest < Test::Unit::TestCase
   end
 
   def test_benchmark_tort_sort_large
-    unsorted_array = Array.new(10_000_000) { rand(1...10_000_000) }
+    unsorted_array = Array.new(100_000_000) { rand(1...10_000_000) }
     assert_true(tort_sort_faster?(unsorted_array))
   end
 end
