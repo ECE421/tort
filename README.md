@@ -1,2 +1,3 @@
 # tort
-multi-threaded sorting for Ruby
+
+Multi-threaded merge sort for generic (and sortable) Ruby objects
