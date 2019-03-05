@@ -6,50 +6,51 @@ class Tort
     @process_workers = process_workers
   end
 
-  def tort_sort(unsorted_array)
-    # TODO: add ability to specify override sort block similar to ruby's normal sort
-    sorted_sub_arrays = Parallel.map(chunk_array(unsorted_array), in_processes: @process_workers, &:sort)
-    sorted_sub_arrays.inject(&method(:merge)).to_a
+  def tort_sort(unsorted_array, &block)
+    sorted_sub_arrays = Parallel.map(chunk_array(unsorted_array), in_processes: @process_workers) do |sub_array|
+      sub_array.sort(&block)
+    end
+    sorted_sub_arrays.inject(&method(:merge))
   end
 
   protected
 
   def chunk_array(array)
-    array.each_slice((array.size / @process_workers.to_f).ceil).to_a
+    array.each_slice((array.size.to_f / @process_workers.to_f).ceil).to_a
   end
 
   # merge two sorted sub arrays
   #
   # Note: this method supports TCO
-  def merge(part_a, part_b)
-    array = []
-    offset_a = 0
-    offset_b = 0
-    while offset_a < part_a.count && offset_b < part_b.count
-      a = part_a[offset_a]
-      b = part_b[offset_b]
+  def merge(left_array, right_array)
+    merged_array = []
+    offset_left = 0
+    offset_right = 0
+    while offset_left < left_array.count && offset_right < right_array.count
+      left_element = left_array[offset_left]
+      right_element = right_array[offset_right]
 
       # Take the smallest of the two, and push it on our array
-      if a <= b
-        array << a
-        offset_a += 1
+      if left_element <= right_element
+        merged_array << left_element
+        offset_left += 1
       else
-        array << b
-        offset_b += 1
+        merged_array << right_element
+        offset_right += 1
       end
     end
 
     # There is at least one element left in either part_a or part_b (not both)
-    while offset_a < part_a.count
-      array << part_a[offset_a]
-      offset_a += 1
+    while offset_left < left_array.count
+      merged_array << left_array[offset_left]
+      offset_left += 1
     end
 
-    while offset_b < part_b.count
-      array << part_b[offset_b]
-      offset_b += 1
+    while offset_right < right_array.count
+      merged_array << right_array[offset_right]
+      offset_right += 1
     end
 
-    array
+    merged_array
   end
 end
