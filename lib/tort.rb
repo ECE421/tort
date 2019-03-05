@@ -19,25 +19,38 @@ class Tort
     array.each_slice((array.size / @process_workers.to_f).ceil).to_a
   end
 
-  def merge(left_array, right_array)
-    if right_array.empty?
-      return left_array # We have nothing to compare. Left wins.
+  # merge two sorted sub arrays
+  #
+  # Note: this method supports TCO
+  def merge(part_a, part_b)
+    array = []
+    offset_a = 0
+    offset_b = 0
+    while offset_a < part_a.count && offset_b < part_b.count
+      a = part_a[offset_a]
+      b = part_b[offset_b]
+
+      # Take the smallest of the two, and push it on our array
+      if a <= b
+        array << a
+        offset_a += 1
+      else
+        array << b
+        offset_b += 1
+      end
     end
 
-    if left_array.empty?
-      return right_array # We have nothing to compare. Right wins.
+    # There is at least one element left in either part_a or part_b (not both)
+    while offset_a < part_a.count
+      array << part_a[offset_a]
+      offset_a += 1
     end
 
-    smallest_number = if left_array.first <= right_array.first
-                        left_array.shift
-                      else
-                        right_array.shift
-                      end
+    while offset_b < part_b.count
+      array << part_b[offset_b]
+      offset_b += 1
+    end
 
-    # We keep doing it until the left or right array is empty.
-    recursive = merge(left_array, right_array)
-
-    # Okay, either left or right array are empty at this point. So we have a result.
-    [smallest_number].concat(recursive)
+    array
   end
 end
