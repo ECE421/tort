@@ -1,6 +1,7 @@
 require_relative 'helper'
 
-# Compare runtimes between tort's sort and a standard Ruby **unoptimized** sort
+# Compare the sorting run-times of a specified unsorted_array between tort's sort
+# and a standard Ruby **unoptimized** sort.
 def tort_sort_faster?(unsorted_array)
   # multi-threaded sort
   sorter = Tort.new
