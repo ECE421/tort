@@ -8,12 +8,15 @@ def tort_sort_faster?(unsorted_array)
   sorter.tort_sort(unsorted_array, &:<=>)
   finish = Time.now
   tort_time = finish - start
+  puts("tort sort time: " + tort_time.to_s)
 
   # normal sort
   start = Time.now
   unsorted_array.sort(&:<=>)
   finish = Time.now
   normal_unoptimized_time = finish - start
+  puts("normal ruby unoptimized sort time: " + normal_unoptimized_time.to_s)
+
   tort_time < normal_unoptimized_time
 end
 
