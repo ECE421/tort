@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.name = 'tort'
   s.version = '0.0.0'
   s.licenses = ['MIT']
-  s.summary = 'Multi-threaded sort for Ruby'
-  s.description = 'Multi-threaded merge sort for generic (and sortable) Ruby objects'
+  s.summary = 'Multi-threaded / multi-processed sort for Ruby'
+  s.description = 'Multi-threaded / multi-processed (merge sort based) sorting for Ruby.'
   s.authors = ['Nathan Klapstein', 'Thomas Lorincz']
   s.email = 'nklapste@ualberta.ca'
   s.homepage = 'https://github.com/ECE421/tort'
