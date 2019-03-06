@@ -2,4 +2,4 @@
 
 [![Build Status](https://travis-ci.com/ECE421/tort.svg?branch=master)](https://travis-ci.com/ECE421/tort)
 
-Multi-threaded merge sort for generic (and sortable) Ruby objects
+Multi-threaded / multi-processed (merge sort based) sorting for Ruby.
