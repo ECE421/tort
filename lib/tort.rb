@@ -18,9 +18,13 @@ class Tort
     array.each_slice([(array.size / workers), 1].max)
   end
 
+  private_class_method :chunk_array
+
   def self.merge(left, right)
     result = []
     result << (left[0] <= right[0] ? left : right).shift until left.empty? || right.empty?
     result.concat(left).concat(right)
   end
+
+  private_class_method :merge
 end
