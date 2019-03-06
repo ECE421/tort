@@ -1,6 +1,6 @@
 require 'parallel'
 
-# Multi-threaded / multi-processed sorting for Ruby
+# Multi-threaded / multi-processed (merge sort based) sorting for Ruby
 class Tort
   # Sort an array utilizing concurrency via multiple processes.
   def self.tort_thread_sort(unsorted_array, thread_workers = Parallel.processor_count, &block)
