@@ -3,15 +3,21 @@ require 'parallel'
 # Multi-threaded / multi-processed (merge sort based) sorting for Ruby
 class Tort
   # Sort an array utilizing concurrency via multiple processes.
-  def self.tort_thread_sort(unsorted_array, thread_workers = Parallel.processor_count, &block)
+  def self.thread_sort(unsorted_array, thread_workers = Parallel.processor_count, duration, &block)
+    start_time = Time.now
     Parallel.map(chunk_array(unsorted_array, thread_workers), in_threads: thread_workers) do |sub_array|
+      raise Parallel::Kill if Time.now - start_time > duration
+
       sub_array.sort(&block)
     end.reduce(&method(:merge))
   end
 
   # Sort an array utilizing concurrency via multiple processes.
-  def self.tort_process_sort(unsorted_array, process_workers = Parallel.processor_count, &block)
+  def self.process_sort(unsorted_array, process_workers = Parallel.processor_count, duration, &block)
+    start_time = Time.now
     Parallel.map(chunk_array(unsorted_array, process_workers), in_processes: process_workers) do |sub_array|
+      raise Parallel::Kill if Time.now - start_time > duration
+
       sub_array.sort(&block)
     end.reduce(&method(:merge))
   end
