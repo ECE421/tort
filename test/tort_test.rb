@@ -9,22 +9,22 @@ class TortTest < Test::Unit::TestCase
     # Do nothing
   end
 
-  def test_tort_thread_sort_rand
+  def test_thread_sort_rand
     unsorted_array = Array.new(10) { rand(-10_000_000...10_000_000) }
     assert_equal(unsorted_array.sort, Tort.thread_sort(unsorted_array, 1000))
   end
 
-  def test_tort_thread_sort_timeout
+  def test_thread_sort_timeout
     unsorted_array = Array.new(100_000) { rand(-10_000_000...10_000_000) }
     assert_raise(Parallel::Kill) { Tort.thread_sort(unsorted_array, 10) }
   end
 
-  def test_tort_process_sort_rand
+  def test_process_sort_rand
     unsorted_array = Array.new(10) { rand(-10_000_000...10_000_000) }
     assert_equal(unsorted_array.sort, Tort.process_sort(unsorted_array, 1000))
   end
 
-  def test_tort_process_sort_timeout
+  def test_process_sort_timeout
     unsorted_array = Array.new(100_000) { rand(-10_000_000...10_000_000) }
     assert_raise(Parallel::Kill) { Tort.process_sort(unsorted_array, 10) }
   end
