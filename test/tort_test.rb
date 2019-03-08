@@ -16,7 +16,7 @@ class TortTest < Test::Unit::TestCase
 
   def test_thread_sort_timeout
     unsorted_array = Array.new(100_000_000) { rand(-10_000_000...10_000_000) }
-    assert_raise(TimeoutError) { Tort.thread_sort(unsorted_array, 0.1) }
+    assert_raise(Timeout::Error) { Tort.thread_sort(unsorted_array, 0.1) }
   end
 
   def test_process_sort_rand
@@ -26,6 +26,6 @@ class TortTest < Test::Unit::TestCase
 
   def test_process_sort_timeout
     unsorted_array = Array.new(100_000_000) { rand(-10_000_000...10_000_000) }
-    assert_raise(TimeoutError) { Tort.process_sort(unsorted_array, 0.1) }
+    assert_raise(Timeout::Error) { Tort.process_sort(unsorted_array, 0.1) }
   end
 end
