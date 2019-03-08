@@ -4,7 +4,7 @@ require 'tort'
 
 def tort_process_sort_time(array)
   start = Time.now
-  Tort.tort_process_sort(array, &:<=>)
+  Tort.process_sort(array, nil, &:<=>)
   finish = Time.now
   total_time = finish - start
   puts('tort_process_sort time: ' + total_time.to_s + 's')
@@ -13,7 +13,7 @@ end
 
 def tort_thread_sort_time(array)
   start = Time.now
-  Tort.tort_thread_sort(array, &:<=>)
+  Tort.thread_sort(array, nil, &:<=>)
   finish = Time.now
   total_time = finish - start
   puts('tort_thread_sort time: ' + total_time.to_s + 's')
