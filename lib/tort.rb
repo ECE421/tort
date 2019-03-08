@@ -1,4 +1,5 @@
 require 'parallel'
+require 'timeout'
 
 # Multi-threaded / multi-processed (merge sort based) sorting for Ruby
 class Tort
