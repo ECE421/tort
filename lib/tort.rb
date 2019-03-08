@@ -4,22 +4,20 @@ require 'parallel'
 class Tort
   # Sort an array utilizing concurrency via multiple processes.
   def self.thread_sort(unsorted_array, duration, thread_workers = Parallel.processor_count, &block)
-    start_time = Time.now
-    Parallel.map(chunk_array(unsorted_array, thread_workers), in_threads: thread_workers) do |sub_array|
-      raise Parallel::Kill if Time.now - start_time > duration
-
-      sub_array.sort(&block)
-    end.reduce(&method(:merge))
+    Timeout.timeout(duration) do
+      Parallel.map(chunk_array(unsorted_array, thread_workers), in_threads: thread_workers) do |sub_array|
+        sub_array.sort(&block)
+      end.reduce(&method(:merge))
+    end
   end
 
   # Sort an array utilizing concurrency via multiple processes.
   def self.process_sort(unsorted_array, duration, process_workers = Parallel.processor_count, &block)
-    start_time = Time.now
-    Parallel.map(chunk_array(unsorted_array, process_workers), in_processes: process_workers) do |sub_array|
-      raise Parallel::Kill if Time.now - start_time > duration
-
-      sub_array.sort(&block)
-    end.reduce(&method(:merge))
+    Timeout.timeout(duration) do
+      Parallel.map(chunk_array(unsorted_array, process_workers), in_processes: process_workers) do |sub_array|
+        sub_array.sort(&block)
+      end.reduce(&method(:merge))
+    end
   end
 
   # Chunk an array into a list of sub arrays optimal for processing
