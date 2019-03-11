@@ -24,7 +24,7 @@ class Tort
   # Chunk an array into a list of sub arrays optimal for processing
   # by the number of workers specified.
   def self.chunk_array(array, workers)
-    array.each_slice([(array.size / workers), 1].max)
+    array.each_slice([(array.count / workers), 1].max)
   end
 
   private_class_method :chunk_array
