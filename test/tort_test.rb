@@ -9,7 +9,9 @@ class TortTest < Test::Unit::TestCase
     # Do nothing
   end
 
+  #####################
   # Thread sort tests
+  #####################
 
   # Pre:
   #   * input array is orderable
@@ -60,7 +62,9 @@ class TortTest < Test::Unit::TestCase
     assert_raise(ArgumentError) { Tort.thread_sort([], 10, -1) }
   end
 
+  ######################
   # Process sort tests
+  ######################
 
   # Pre:
   #   * input array is orderable
