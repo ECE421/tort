@@ -18,7 +18,7 @@ class PickShareFunctional {
         ).filter(
                 i -> ShareUtil.isPriceLessThan(500).test(i)
         ).reduce(
-                (shareInfo, shareInfo2) -> ShareUtil.pickHigh(shareInfo, shareInfo2)
+                (shareInfo1, shareInfo2) -> ShareUtil.pickHigh(shareInfo1, shareInfo2)
         ));
     }
 
