@@ -1,3 +1,5 @@
+# Credit for RLisp to https://github.com/fogus/ulithp/blob/master/src/lithp.rb
+
 class RLisp
     def initialize()
         @context = { 
